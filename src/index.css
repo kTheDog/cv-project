@@ -1,0 +1,59 @@
+html, root, body, document {
+  height: 100%;
+}
+
+
+body, #root {
+
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  grid-auto-flow: column;
+  background-color: #e1e8ee;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.hide {
+  display: none;
+}
+
+.generalInfoForm {
+  padding: 20px;
+  background-color: #c8d6e2;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  row-gap: 2px;
+  max-width: 30%;
+  font-size: 18px;
+  justify-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.generalInfoForm > input,.generalInfoForm > textarea {
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: #ffffff;
+  font-size: inherit;
+  width: 100%;
+  height: 27px;
+}
+
+.generalInfoForm > textarea > {
+  height: 50px;
+}
+
+button {
+
+  background-color: palevioletred;
+  margin-top: 20px;
+}
