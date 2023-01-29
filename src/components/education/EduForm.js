@@ -20,11 +20,19 @@ export default class EduForm extends Component {
   }
 
   render() {
-    let {uniName} = this.props.info || {}
+    let {uniName, degree, subject} = this.props.info || {}
     return (
       <div>
+
+
         <label htmlFor="uniName">University Name</label>
         <input type="text" id="uniName" defaultValue={uniName}/>
+
+        <label htmlFor="degree">Degree</label>
+        <input type="text" id="degree" defaultValue={degree} />
+
+        <label htmlFor="subject">Subject</label>
+        <input type="text" id="subject" defaultValue={subject}/>
         <button onClick={this.submit}>Submit</button>
       </div>
     )

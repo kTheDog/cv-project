@@ -2,9 +2,10 @@ import React from "react";
 import * as ReactDOM from 'react-dom/client';
 import GeneralForm from "./components/general/GeneralForm";
 import GeneralInfo from "./components/general/GeneralInfo";
-import AddEduButton from "./education/AddEduButton";
-import EduForm from "./education/EduForm";
-import EduInfoSingle from "./education/EduInfoSingle";
+import AddEduButton from "./components/education/AddEduButton";
+import EduForm from "./components/education/EduForm";
+import EduInfoSingle from "./components/education/EduInfoSingle";
+import WorkMain from "./components/work/WorkMain";
 
 let eduKey = 0
 
@@ -153,12 +154,18 @@ class App extends React.Component {
           <div id="general">
             {this.generalStuff()}
           </div>
+
           <div id="education">
             {this.eduButtonStuff()}
             <div id="eduList">
               {this.eduList()}
             </div>
           </div>
+
+          <div id="work">
+            <WorkMain></WorkMain>
+          </div>
+
       </div>
     );
   }
