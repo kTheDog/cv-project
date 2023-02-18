@@ -1,8 +1,8 @@
 import React from "react";
 import EduForm from "./EduForm";
+/*
 
-
-export default class EduInfoSingle extends React.Component {
+class EduInfoSingles extends React.Component {
   constructor(props){
     super(props)
   }
@@ -32,5 +32,32 @@ export default class EduInfoSingle extends React.Component {
 
 
   }
+
+}
+*/
+export default function EduInfoSingle(props) {
+
+
+
+
+  let {uniName, degree, subject} = props.info
+    if (props.info.editing) {
+      return <EduForm func={props.formFunc} target={props.info.edu} info={props.info}></EduForm>
+    }
+    else {
+      return (
+        <div>
+
+          <div> {uniName}</div>
+          <div>{degree}</div>
+          <div>{subject}</div>
+
+          <button onClick={() => {
+            props.edit(props.info)
+          }}
+          >Edit</button>
+        </div>
+      )
+    }
 
 }

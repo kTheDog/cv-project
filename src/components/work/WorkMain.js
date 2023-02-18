@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AddWorkButton from "./AddWorkButton";
 import WorkForm from "./WorkForm";
 import WorkInfoSingle from "./WorkInfoSingle";
 
 let workKey = 0
-
-export default class WorkMain extends React.Component {
+/*
+class WorkMains extends React.Component {
 
   constructor(props) {
     super(props)
@@ -116,7 +116,6 @@ export default class WorkMain extends React.Component {
   render () {
     return (
       <div>
-        dasdas
         {this.workButtonStuff()}
 
         <div id="workList">
@@ -125,4 +124,118 @@ export default class WorkMain extends React.Component {
       </div>
     )
   }
+}
+
+*/
+
+
+function WorkList (workItems, workEdit, submitWorkEdit) {
+  let values = Object.values(workItems).reverse()
+  values = values.map (val => {
+
+    return (
+    <WorkInfoSingle
+
+    info={val}
+    key={val.work}
+    edit={workEdit}
+    formFunc={submitWorkEdit}
+    >
+    </WorkInfoSingle>
+    )
+
+  })
+
+  console.log(values)
+  return values
+}
+
+export default function WorkMain(props) {
+  const [workItems, setWorkItems] = useState({})
+  const [showWorkForm, setShowWorkForm] = useState(false)
+
+  function submitWorkEdit (e, wrk) {
+    let obj = {},
+        parent = e.target.parentElement,
+        inputs = parent.querySelectorAll('input'),
+      textarea = parent.querySelector('textarea')
+
+
+    inputs.forEach(inp => {
+      obj[inp.id] = inp.value
+    });
+
+    obj[textarea.id] = textarea.value
+    obj.work = wrk
+    obj.editing = false
+
+    let copy = { ... workItems}
+    setWorkItems(Object.assign(copy, {[obj.work]: obj}))
+  }
+
+  function workEdit (obj) {
+    let target = workItems[obj.work]
+    target.editing = true
+
+    let copy = {... workItems}
+    setWorkItems(Object.assign(copy, {[obj.work]: target}))
+
+  }
+
+
+
+
+  function workSubmit (e) {
+    let obj = {},
+        parent = e.target.parentElement,
+        inputs = parent.querySelectorAll('input'),
+        textarea = parent.querySelector('textarea')
+
+    inputs.forEach(inp => {
+      obj[inp.id] = inp.value
+    });
+    obj[textarea.id] = textarea.value
+
+    workKey += 1
+    obj.work = `work${workKey}`
+    obj.editing = false
+
+
+    setShowWorkForm(false)
+
+
+    setWorkItems(Object.assign(workItems, {[obj.work]: obj}))
+  }
+
+
+
+  function workButtonFunction () {
+    setShowWorkForm(true)
+  }
+  function workButtonStuff () {
+    if (showWorkForm) {
+      return (
+        <WorkForm func={workSubmit}></WorkForm>
+      )
+    } else {
+      return (
+        <AddWorkButton func={workButtonFunction}></AddWorkButton>
+      )
+    }
+  }
+
+
+  console.log('rerender')
+
+  return (
+
+    <div>
+      {workButtonStuff()}
+
+      <div id="workList">
+        {WorkList(workItems, workEdit, submitWorkEdit)}
+      </div>
+    </div>
+  )
+
 }

@@ -1,7 +1,7 @@
 import React from "react";
+/*
 
-
-export default class AddWorkButton extends React.Component {
+class AddWorkButton extends React.Component {
 
   constructor(props) {
     super(props)
@@ -15,4 +15,15 @@ export default class AddWorkButton extends React.Component {
       </div>
     )
   }
+}
+*/
+
+export default function AddWorkButton (props) {
+
+
+  return (
+    <div>
+      <button onClick={props.func}> Add Work Experience</button>
+    </div>
+  )
 }

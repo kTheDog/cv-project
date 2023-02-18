@@ -1,7 +1,7 @@
 import React from "react";
 import WorkForm from "./WorkForm";
-
-export default class WorkInfoSingle extends React.Component {
+/*
+class WorkInfoSingles extends React.Component {
 
   constructor (props) {
     super(props)
@@ -38,4 +38,46 @@ export default class WorkInfoSingle extends React.Component {
 
 
   }
+}
+*/
+
+export default function WorkInfoSingle (props) {
+
+
+  console.log('xxx')
+  if (props.info.editing) {
+    console.log('aaaa')
+    return <WorkForm info={props.info} func={props.formFunc} target={props.info.work}></WorkForm>
+  }
+  else {
+    console.log('bb')
+    return (
+
+      <div>
+        <div>
+        {props.info.compName}
+
+        </div>
+        <div>
+        {props.info.posTitle}
+
+        </div>
+        <div>
+        {props.info.mainTasks}
+
+        </div>
+
+        <button onClick={ () => {
+          props.edit(props.info)
+        }} >Edit</button>
+      </div>
+    )
+  }
+
+
+
+
+
+
+
 }

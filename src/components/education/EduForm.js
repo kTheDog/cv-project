@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-
-export default class EduForm extends Component {
+/*
+class EduForms extends Component {
 
   constructor(props) {
     super(props)
@@ -38,4 +38,35 @@ export default class EduForm extends Component {
     )
   }
 
+}
+*/
+
+export default function EduForm (props) {
+
+
+  function submit(e){
+    if (props.target)
+    {
+      props.func(e, props.target)
+    } else {
+      props.func(e)
+    }
+  }
+
+  let {uniName, degree, subject} = props.info || {}
+  return (
+    <div>
+
+
+      <label htmlFor="uniName">University Name</label>
+      <input type="text" id="uniName" defaultValue={uniName}/>
+
+      <label htmlFor="degree">Degree</label>
+      <input type="text" id="degree" defaultValue={degree} />
+
+      <label htmlFor="subject">Subject</label>
+      <input type="text" id="subject" defaultValue={subject}/>
+      <button onClick={submit}>Submit</button>
+    </div>
+  )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
-
-export default class AddEduButton extends React.Component {
+/*
+export default class AddEduButtons extends React.Component {
 
   constructor(props) {
     super(props)
@@ -10,4 +10,13 @@ export default class AddEduButton extends React.Component {
   render() {
     return <button onClick={this.props.func}>Add Educational Experience</button>
   }
+}
+*/
+
+
+export default function AddEduButton (props) {
+
+
+  return <button onClick={props.func}>Add Educational Experience</button>
+
 }

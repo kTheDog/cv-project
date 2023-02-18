@@ -1,6 +1,6 @@
 import React from "react";
-
-export default class WorkForm extends React.Component {
+/*
+class WorkForms extends React.Component {
 
   constructor(props) {
     super(props)
@@ -37,4 +37,33 @@ export default class WorkForm extends React.Component {
       </div>
     )
   }
+}
+*/
+export default function WorkForm(props) {
+
+  function submit(e){
+    if (props.target)
+    {
+      props.func(e, props.target)
+    } else {
+      props.func(e)
+    }
+  }
+
+  let {posTitle, compName, mainTasks} = props.info || {}
+  return (
+    <div>
+      <label htmlFor="compName">Company Name</label>
+      <input type="text" id="compName" defaultValue={compName}/>
+
+      <label htmlFor="posTitle">Position Title</label>
+      <input type="text" id="posTitle" defaultValue={posTitle} />
+
+
+      <label htmlFor="mainTasks">Main Tasks</label>
+      <textarea id="mainTasks" defaultValue={mainTasks}></textarea>
+
+      <button onClick={submit}>Submit</button>
+    </div>
+  )
 }

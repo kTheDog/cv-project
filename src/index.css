@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.app, .form, #general, #education, #work {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  align-items: center;
+}

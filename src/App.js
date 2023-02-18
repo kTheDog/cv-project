@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as ReactDOM from 'react-dom/client';
 import GeneralForm from "./components/general/GeneralForm";
 import GeneralInfo from "./components/general/GeneralInfo";
@@ -9,40 +9,25 @@ import WorkMain from "./components/work/WorkMain";
 
 let eduKey = 0
 
-class App extends React.Component {
-
-  constructor() {
-    super()
-    this.generalStuff = this.generalStuff.bind(this)
-    this.generalFormOnSubmit = this.generalFormOnSubmit.bind(this)
-    this.generalFormEdit = this.generalFormEdit.bind(this)
-    this.eduButtonFunc = this.eduButtonFunc.bind(this)
-    this.eduButtonStuff = this.eduButtonStuff.bind(this)
-    this.submitEduButton = this.submitEduButton.bind(this)
-    this.eduList = this.eduList.bind(this)
-    this.eduEdit = this.eduEdit.bind(this)
-    this.submitEduEdit = this.submitEduEdit.bind(this)
-    this.state = {
-      showGeneralForm: true,
-      showEduForm: false
-    }
-  }
-
-  generalStuff () {
-    let {showGeneralForm, generalInfo} = this.state
+function App () {
+  const [showGeneralForm, setShowGeneralForm] = useState(true)
+  const [showEduForm, setShowEduForm] = useState(false)
+  const [generalInfo, setGeneralInfo] = useState(null)
+  const [eduObjects, setEduObjects] = useState({})
+  function generalStuff () {
     if (showGeneralForm) {
       return (
-        <GeneralForm onSubmit={this.generalFormOnSubmit} info={generalInfo}></GeneralForm>
+        <GeneralForm onSubmit={generalFormOnSubmit} info={generalInfo}></GeneralForm>
       )
     }
     else {
       return (
-        <GeneralInfo info={generalInfo} edit={this.generalFormEdit}></GeneralInfo>
+        GeneralInfo({info: generalInfo, edit: generalFormEdit})
       )
     }
   }
 
-  generalFormOnSubmit (e) {
+  function generalFormOnSubmit (e) {
 
     let obj = {},
         parent = e.target.parentElement,
@@ -55,34 +40,27 @@ class App extends React.Component {
 
     obj[textarea.id] = textarea.value
 
-    this.setState({
-      generalInfo: obj,
-      showGeneralForm: false
-    })
+    setGeneralInfo(obj)
+    setShowGeneralForm(false)
   }
 
-  generalFormEdit () {
-    this.setState({
-      showGeneralForm: true
-    })
+  function generalFormEdit () {
+    setShowGeneralForm(true)
   }
-  eduButtonFunc () {
-    this.setState({
-      showEduForm: true
-    })
+  function eduButtonFunc () {
+    setShowEduForm(true)
   }
-  eduButtonStuff () {
-    let {showEduForm} = this.state
+  function eduButtonStuff () {
 
     if (showEduForm) {
-      return <EduForm func={this.submitEduButton}></EduForm>
+      return <EduForm func={submitEduButton}></EduForm>
     }
     else {
-      return <AddEduButton func={this.eduButtonFunc}></AddEduButton>
+      return <AddEduButton func={eduButtonFunc}></AddEduButton>
     }
   }
 
-  submitEduButton (e) {
+  function submitEduButton (e) {
     let obj = {},
         parent = e.target.parentElement,
         inputs = parent.querySelectorAll('input')
@@ -94,13 +72,14 @@ class App extends React.Component {
     eduKey += 1
     obj.edu = `edu${eduKey}`
     obj.editing = false
-    this.setState({
-      [obj.edu]: obj,
-      showEduForm: false
-    })
+
+
+    let copy = {...eduObjects}
+    setEduObjects(Object.assign(copy, {[obj.edu]: obj}))
+    setShowEduForm(false)
   }
 
-  submitEduEdit (e, ed) {
+  function submitEduEdit (e, ed) {
     let obj = {},
         parent = e.target.parentElement,
         inputs = parent.querySelectorAll('input')
@@ -111,13 +90,13 @@ class App extends React.Component {
 
     obj.edu = ed
     obj.editing = false
-    this.setState({
-      [obj.edu]: obj,
-    })
-  }
-  eduList() {
 
-    let values = Object.values(this.state)
+    let copy = {...eduObjects}
+    setEduObjects(Object.assign(copy, {[obj.edu]: obj}))
+  }
+  function eduList() {
+
+    let values = Object.values(eduObjects)
 
 
 
@@ -127,8 +106,8 @@ class App extends React.Component {
       return <EduInfoSingle
       info={val}
       key={val.edu}
-      edit={this.eduEdit}
-      formFunc={this.submitEduEdit}>
+      edit={eduEdit}
+      formFunc={submitEduEdit}>
       </EduInfoSingle>
     })
 
@@ -136,39 +115,35 @@ class App extends React.Component {
   }
 
 
-  eduEdit (obj) {
-    let target = this.state[obj.edu]
+  function eduEdit (obj) {
+    let target = eduObjects[obj.edu]
     target.editing = true
-    this.setState({
-      [obj.edu]: target
-    })
-    console.log(this.state)
+    let copy = {...eduObjects}
+    setEduObjects(Object.assign(copy, {[obj.edu]: obj}))
+    console.log(eduObjects)
   }
+  return (
+    <div className="App">
+        <div id="general">
+          <h1>General Info</h1>
 
-  render() {
+          {generalStuff()}
+        </div>
 
-
-
-    return (
-      <div className="App">
-          <div id="general">
-            {this.generalStuff()}
+        <div id="education">
+          {eduButtonStuff()}
+          <div id="eduList">
+            {eduList()}
           </div>
+        </div>
 
-          <div id="education">
-            {this.eduButtonStuff()}
-            <div id="eduList">
-              {this.eduList()}
-            </div>
-          </div>
+        <div id="work">
+          <WorkMain></WorkMain>
+        </div>
 
-          <div id="work">
-            <WorkMain></WorkMain>
-          </div>
+    </div>
+  );
 
-      </div>
-    );
-  }
 
 }
 export default App;
